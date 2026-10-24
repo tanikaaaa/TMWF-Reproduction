@@ -1,72 +1,412 @@
-# Transformer-based Model for Multi-tab Website Fingerprinting Attack
 
-## Introduction
+# TMWF — Transformer-Based Multi-Tab Website Fingerprinting | Research Reproduction
 
-This repository presents the complete version of the paper "Transformer-based Model for Multi-tab Website Fingerprinting Attack" in ACM CCS 2023 along with corresponding codes and datasets.  
+**A reproduction of the TMWF research paper (ACM CCS 2023)**
 
-If you want to complete the "synthesize multi-tab traces, train the model, and evaluate" process, after running the "MergeSingleTraces_openworld.py" file to generate the synthetic traces, you may need to manually rename some files in order to read by subsequent program.  
+This repository contains an experimental reproduction of **Transformer-based Model for Multi-tab Website Fingerprinting Attack (TMWF)**, originally published at ACM CCS 2023.
 
-We apologize for any inconsistencies in the code formatting, as these codes are intended solely for research purposes. Your understanding is greatly appreciated while reviewing them.  
+The objective is to reproduce selected experiments from the original paper, evaluate the model on Tor traffic datasets, and compare the obtained results with the published findings.
 
-If these data and code contribute to your work, please cite this paper, and here is the corresponding bibtex text:  
+### Reproduction Highlights
 
+- Implemented and evaluated the original **DFNet–Transformer architecture**.
+- Reproduced **Appendix F (Table 7)** and **Appendix H (Table 9)**.
+- Completed two independent training runs of **50 epochs each**.
+- Trained on **20,000 and 40,000 synthetic multi-tab traces**, respectively.
+- Evaluated synthetic and real-world multi-tab Tor traffic.
+- Verified all **36 primary published-versus-reproduced metrics**.
+- Obtained results within **4 percentage points for 35 of 36 metrics**.
+- Preserved evaluation logs, configuration details, and reproducibility evidence.
+
+> **Reproduction scope:** This repository reproduces selected experiments from Appendices F and H, not every experiment in the original paper. Numerical agreement does not imply exact or bitwise reproduction.
+
+---
+
+## Research Paper and Documentation
+
+**Original Paper:** Transformer-based Model for Multi-tab Website Fingerprinting Attack (ACM CCS 2023)
+
+**Original Implementation:** [jzx-bupt/TMWF](https://github.com/jzx-bupt/TMWF)
+
+**Upstream Git Commit:** `f593e8afba22750edae23c0c0c32ddf6a62772d4`
+
+### Full Reproduction Report
+
+**[View the Complete Reproduction Report (PDF)](docs/TMWF_REPRODUCTION_REPORT.pdf)**
+
+The 23-page report documents:
+
+- Research background and threat model
+- Original TMWF architecture
+- Dataset preparation and synthetic trace generation
+- Training and evaluation methodology
+- Published-versus-reproduced results
+- Implementation choices and deviations
+- Experimental limitations and reproducibility evidence
+
+[Read the Markdown Report](docs/TMWF_REPRODUCTION_REPORT.md)
+
+---
+
+## 1. Research Overview
+
+Website Fingerprinting (WF) is a traffic-analysis technique that attempts to identify websites from observable traffic patterns even when communication is encrypted.
+
+In the Tor network, an observer monitoring the connection between a client and its entry relay may analyze traffic direction and timing patterns without decrypting the underlying content.
+
+Traditional website fingerprinting generally focuses on **single-tab browsing**.
+
+Multi-tab browsing introduces additional challenges because traffic from multiple simultaneously active webpages becomes interleaved, making individual website identification more difficult.
+
+TMWF addresses this problem using a deep-learning architecture combining:
+
+1. **DFNet** for traffic feature extraction.
+2. **Transformer Encoder** for contextual representation.
+3. **Transformer Decoder** for multi-page prediction.
+
+The model predicts website classes across multiple output slots.
+
+---
+
+## 2. TMWF Model Architecture
+
+![TMWF Architecture](docs/figures/tmwf_architecture.png)
+
+*Figure 1. Architecture of the reproduced TMWF model.*
+
+### Model Configuration
+
+| Component | Configuration |
+|---|---|
+| Input representation | Tor-cell direction sequence |
+| Input sequence length | 30,720 |
+| Feature extractor | DFNet |
+| Embedding dimension | 256 |
+| Attention heads | 8 |
+| Transformer encoder layers | 2 |
+| Transformer decoder layers | 2 |
+| Feedforward dimension | 1,024 |
+| Output queries | 6 |
+| Classes per query | 51 |
+| Dropout | 0.1 |
+
+The input is represented using traffic directions, with positive and negative values indicating opposite traffic directions. Sequences are truncated or zero-padded to the required length.
+
+The model produces **six classification outputs**, with each output predicting one of 51 classes.
+
+The additional class represents the unmonitored/no-tab category according to the original implementation.
+
+Training uses ordered six-slot supervision and summed cross-entropy loss.
+
+---
+
+## 3. Experimental Pipeline
+
+![Experimental Pipeline](docs/figures/tmwf_experimental_pipeline.png)
+
+*Figure 2. Data preparation, training, and evaluation pipelines for Appendices F and H.*
+
+The reproduction uses the original Tor Browser (TBB) datasets provided with the released implementation.
+
+### Original Single-Tab Dataset
+
+| Partition | Samples |
+|---|---:|
+| Training | 8,000 |
+| Testing | 2,000 |
+
+The original training partition contains 4,000 monitored and 4,000 unmonitored traces.
+
+Synthetic training datasets are generated from the original training partition. Synthetic evaluation datasets are generated from the held-out testing partition.
+
+The two reproduced experimental configurations use separate training runs.
+
+### Appendix F
+
+- 20,000 synthetic six-tab training traces
+- 5,000 evaluation traces each for 2-, 4-, and 6-tab settings
+- Duration-overlap synthesis
+- 50 training epochs
+
+### Appendix H
+
+- 40,000 synthetic six-tab training traces
+- Ratio-synthetic evaluation: 1,000 each for 2, 3, and 4 tabs
+- Delay-synthetic evaluation: 1,000 each for 2, 3, and 4 tabs
+- Real-world evaluation: 1,000 each for 2, 3, and 4 tabs
+- 50 training epochs
+
+Real-world and delay-synthetic evaluation data were not used to train the Appendix H model.
+
+---
+
+## 4. Experimental Results
+
+All results below are from the final **epoch-50 checkpoints**.
+
+The published values are compared against the independently reproduced values using the original evaluation metrics.
+
+### Appendix F — Table 7
+
+**Overall Basic Metrics**
+
+| Metric | Tabs | Published | Reproduced |
+|---|---:|---:|---:|
+| Accuracy | 2 | 55.6% | **55.9%** |
+| Precision | 2 | 71.9% | **71.9%** |
+| Recall | 2 | 75.2% | **72.0%** |
+| Accuracy | 4 | 64.7% | **64.3%** |
+| Precision | 4 | 74.2% | **73.7%** |
+| Recall | 4 | 73.4% | **71.9%** |
+| Accuracy | 6 | 65.1% | **63.0%** |
+| Precision | 6 | 77.8% | **77.4%** |
+| Recall | 6 | 67.6% | **64.6%** |
+
+**Overall Advanced Metrics**
+
+| Metric | Tabs | Published | Reproduced |
+|---|---:|---:|---:|
+| Accuracy | 2 | 19.3% | **21.3%** |
+| Precision | 2 | 28.3% | **30.9%** |
+| Recall | 2 | 40.2% | **40.3%** |
+| Accuracy | 4 | 17.7% | **18.4%** |
+| Precision | 4 | 25.4% | **25.9%** |
+| Recall | 4 | 29.1% | **30.1%** |
+| Accuracy | 6 | 52.1% | **50.0%** |
+| Precision | 6 | 64.8% | **63.6%** |
+| Recall | 6 | 59.9% | **57.1%** |
+
+All 18 Appendix F primary metrics are within **3.2 percentage points** of the published results.
+
+![Appendix F Results](docs/figures/tmwf_table7_comparison.png)
+
+*Figure 3. Comparison of published and reproduced Appendix F / Table 7 results.*
+
+### Appendix H — Table 9
+
+**Overall Basic Metrics**
+
+| Evaluation Dataset | Metric | Published | Reproduced |
+|---|---|---:|---:|
+| Mixed Ratio-Synthetic | Accuracy | 61.3% | **60.1%** |
+| Mixed Ratio-Synthetic | Precision | 75.3% | **75.9%** |
+| Mixed Ratio-Synthetic | Recall | 73.5% | **71.2%** |
+| Mixed Delay-Synthetic | Accuracy | 31.6% | **25.4%** |
+| Mixed Delay-Synthetic | Precision | 63.8% | **60.9%** |
+| Mixed Delay-Synthetic | Recall | 31.3% | **28.6%** |
+| Mixed Real-World | Accuracy | 23.0% | **21.0%** |
+| Mixed Real-World | Precision | 58.9% | **56.4%** |
+| Mixed Real-World | Recall | 24.8% | **22.3%** |
+| Real 2-Tab | Accuracy | 12.7% | **9.7%** |
+| Real 2-Tab | Precision | 44.3% | **41.5%** |
+| Real 2-Tab | Recall | 15.1% | **11.1%** |
+| Real 3-Tab | Accuracy | 16.0% | **14.8%** |
+| Real 3-Tab | Precision | 54.3% | **52.4%** |
+| Real 3-Tab | Recall | 17.3% | **15.8%** |
+| Real 4-Tab | Accuracy | 34.4% | **31.8%** |
+| Real 4-Tab | Precision | 63.2% | **61.0%** |
+| Real 4-Tab | Recall | 35.6% | **32.6%** |
+
+![Appendix H Results](docs/figures/tmwf_table9_comparison.png)
+
+*Figure 4. Comparison of published and reproduced Appendix H / Table 9 results.*
+
+### Main Observations
+
+- The ratio-synthetic results show close agreement with the original paper.
+- Real-world performance is substantially lower than ratio-synthetic performance, consistent with the generalization gap reported in the paper.
+- The largest primary-metric difference occurs in mixed delay-synthetic Basic Accuracy: **25.4% reproduced versus 31.6% published**, a difference of **−6.2 percentage points**.
+- Overall, **35 of the 36 primary metrics** are within 4 percentage points of the published results.
+
+These comparisons are descriptive single-run findings, not evidence of statistical equivalence. The metrics are not statistically independent.
+
+---
+
+## 5. Training Configuration
+
+| Parameter | Value |
+|---|---|
+| Framework | PyTorch 2.8.0 |
+| Python | 3.9.6 |
+| NumPy | 1.26.4 |
+| Hardware backend | Apple Metal Performance Shaders (MPS) |
+| Optimizer | Adam |
+| Learning rate | 0.0005 |
+| Batch size | 80 |
+| Epochs | 50 |
+| Loss | Summed six-slot CrossEntropyLoss |
+| Random seed | 2023 |
+| Checkpoint selection | Final epoch (50) |
+
+Both model runs were trained from scratch.
+
+The final epoch was used for evaluation, rather than selecting the epoch with the best validation performance.
+
+---
+
+## 6. Project Structure
+
+```text
+TMWF-Reproduction/
+├── code/
+│   ├── models.py
+│   ├── metrics.py
+│   ├── appendix_f_data.py
+│   ├── appendix_h_data.py
+│   ├── run_appendix_f_synthesis.py
+│   ├── run_appendix_h_synthesis.py
+│   ├── run_appendix_h_delay_synthesis.py
+│   ├── train_appendix_f.py
+│   ├── train_appendix_h.py
+│   ├── evaluate_appendix_f.py
+│   ├── evaluate_appendix_h.py
+│   ├── evaluate_appendix_h_delay.py
+│   └── ...
+├── dataset/
+│   └── Original tracked dataset archives
+├── docs/
+│   ├── TMWF_REPRODUCTION_REPORT.pdf
+│   ├── TMWF_REPRODUCTION_REPORT.md
+│   └── figures/
+│       ├── tmwf_architecture.png
+│       ├── tmwf_experimental_pipeline.png
+│       ├── tmwf_table7_comparison.png
+│       └── tmwf_table9_comparison.png
+├── outputs/
+│   └── reproducibility/
+│       └── Archived evaluation logs and manifests
+└── README.md
 ```
-@inproceedings{10.1145/3576915.3623107,
-author = {Jin, Zhaoxin and Lu, Tianbo and Luo, Shuang and Shang, Jiaze},
-title = {Transformer-Based Model for Multi-Tab Website Fingerprinting Attack},
-year = {2023},
-isbn = {9798400700507},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-url = {https://doi.org/10.1145/3576915.3623107},
-doi = {10.1145/3576915.3623107},
-abstract = {While the anonymous communication system Tor can protect user privacy, website fingerprinting (WF) attackers can still identify the websites that users access over encrypted network connections by analyzing the metadata generated during network communication. Despite the emergence of new WF attack techniques in recent years, most research in this area has focused on pure traffic traces generated from single-tab browsing behavior. However, multi-tab browsing behavior significantly degrades the performance of WF classification models based on the single-tab assumption. As a result, some research has shifted its focus to multi-tab WF attacks, although most of these works have limited utilization of the mixed information contained in multi-tab traces. In this paper, we propose an end-to-end multi-tab WF attack model, called Transformer-based model for Multi-tab Website Fingerprinting attack (TMWF). Inspired by object detection algorithms in computer vision, we treat multi-tab WF recognition as a problem of predicting ordered sets with a maximum length. By adding enough single-tab queries to the detection model and letting each query extract WF features from different positions in the multi-tab traces, our model's Transformer architecture capitalizes more fully on trace features. Paired with our new proposed model training approach, we accomplish adaptive recognition of multi-tab traces with varying numbers of web pages. This approach successfully eliminates a strong and unrealistic assumption in the field of multi-tab WF attacks - that the number of tabs contained in a sample belongs to the attacker's prior knowledge. Experimental results in various scenarios demonstrate that the performance of TMWF is significantly better than existing multi-tab WF attack models. To evaluate model performance in more authentic scenarios, we present a dataset of multi-tab trace data collected from real open-world environments.},
-booktitle = {Proceedings of the 2023 ACM SIGSAC Conference on Computer and Communications Security},
-pages = {1050–1064},
-numpages = {15},
-keywords = {privacy, multi-tab website fingerprinting, transformer, tor},
-location = {<conf-loc>, <city>Copenhagen</city>, <country>Denmark</country>, </conf-loc>},
-series = {CCS '23}
-}
+
+Generated traffic datasets, training checkpoints, and local Python environments are excluded from regular Git tracking due to their size.
+
+---
+
+## 7. Reproducibility and Evaluation
+
+The experimental reproduction was performed on macOS using Python 3.9.6 and PyTorch 2.8.0 with MPS acceleration.
+
+The following commands describe evaluation in the **original prepared local environment**.
+
+They require:
+
+- The original TMWF datasets to be extracted.
+- The generated Appendix F/H datasets to be present.
+- The trained epoch-50 checkpoints to be available.
+- A compatible Python environment with the required dependencies.
+
+### Appendix F Evaluation
+
+```bash
+.venv/bin/python -B code/evaluate_appendix_f.py
 ```
 
-## File Description
-    ├── code  #Part of the codes used in the experiments                     
-        ├── MergeSingleTraces_openworld.py: Synthesize multi-tab traces through the original single-tab traces. The JSON files generated alongside the multi-tab trace dataset contain annotations, such as the starting and ending points of individual page segments. Although we used this data while debugging the DETR source code earlier, it is not involved in the current TMWF code experiments.
-        ├── metrics.py: All evaluation metrics used in the experiments        
-        ├── models.py : TMWF's impletantion by pytorch
-        ├── real_openworld.py: Codes of real openworld experiments, use real multi-tab traces  
-        └── simulation_openworld.py: Codes of simulation openworld experiments, use synthesized multi-tab traces
-    ├── dataset  #Part of the datasets used in the experiments, use Python Pickle module to load. Please be aware that due to the imperfections in our code implementation, manual renaming of certain generated files may be necessary after manually synthesizing multi-tab trace datasets to facilitate program loading.
-        ├── chrome realworld: Except for "2tabs-extra" containing over 10,000 2-tab chrome browser trace samples, each file contains over 1,000 samples
-        ├── chrome single tab: 5,000 monitored traces (comprising 50 monitored websites, each with 100 individual single-tab traces), along with 5,000 non-monitored traces, were stratified and partitioned into training and testing (or validation) sets in a 4:1 ratio, used for synthesizing multi-tab traces
-        ├── tbb realworld: Except for "2tabs-extra" containing over 10,000 2-tab tor browser trace samples, each file contains over 1,000 samples
-        └── tbb single tab: 5,000 monitored traces (comprising 50 monitored websites, each with 100 individual single-tab traces), along with 5,000 non-monitored traces, were stratified and partitioned into training and testing (or validation) sets in a 4:1 ratio, used for synthesizing multi-tab traces      
-    ├── complete_paper_version_of_TMWF.pdf      
-    └── README.md
+### Appendix H — Ratio and Real-World Evaluation
 
-## Supplementary Description
-Due to constraints such as the length of conference papers, thematic requirements, and other limiting factors, we have omitted certain content in the final paper draft. We summarize these ideas and potential research directions below:  
-* Due to the fact that multi-class models cannot ignore the differences between various website classes within the monitored set, as well as on our experimental results and the conclusions in recent works [1](https://www.usenix.org/conference/usenixsecurity22/presentation/cherubin), it may be challenging for current WF classifiers to perform effectively in real open-world scenarios with end-to-end multi-classification tasks. However, breaking down this end-to-end task into binary and multi-classification sub-tasks (as well as described in recent works [2](https://ieeexplore.ieee.org/document/9731352) [3](https://petsymposium.org/popets/2023/popets-2023-0125.php)) could potentially be a method for performance improvement.  
-* Sliding window mechanism: By setting a window size (i.e., the model's recognition limit and the segment length within the window) and the overlap ratio between windows, the attacker can merge the recognition results of multiple local segments to determine the recognition result of the complete trace. Although intuitively, the sliding window mechanism can be used to extend single-tab WF attacks to multi-tab traces, the overlapping parts of multi-tab traces may lead to more erroneous results from these classifiers. As for how to choose the parameters of the sliding window, we believe it involves a trade-off to maximize efficiency and performance, which is a topic for future exploration.  
-* In the experiment, we only used a training set with a single fixed N-value setting (the maximum number of pages the model supports to recognize). According to the opinions of anonymous reviewers, researchers can try to match a variety of different page number multi-tab trace samples in the training set in the future to explore the performance changes of the model.  
+```bash
+.venv/bin/python -B code/evaluate_appendix_h.py --evaluate
+```
 
-**Reference:**  
-[1] Cherubin, Giovanni, Rob Jansen, and Carmela Troncoso. "Online website fingerprinting: Evaluating website fingerprinting attacks on Tor in the real world." 31st USENIX Security Symposium (USENIX Security 22). 2022.  
-[2] Wang, Yanbin, et al. "SnWF: Website fingerprinting attack by ensembling the snapshot of deep learning." IEEE Transactions on Information Forensics and Security 17 (2022): 1214-1226.  
-[3] Jansen, Rob, and Ryan Wails. "Data-Explainable Website Fingerprinting with Network Simulation." Proceedings on Privacy Enhancing Technologies 4 (2023): 559-577. 
+### Appendix H — Delay-Synthetic Evaluation
 
-## Future Directions
-In our future work, we contemplate the following potential research directions:  
-1. Incorporating transfer learning by utilizing a pre-trained backbone to enhance the efficiency of our model attacks.  
-2. Expanding the task scenarios to investigate the model's performance under various conditions, including concept drift, the base rate of different websites, WF defense technologies, etc.  
-3. Attempting data augmentation techniques, inspired by studies in the field of computer vision, to automatically modify the original trace sequences to simulate noise in real-world environments.  
+```bash
+.venv/bin/python -B code/evaluate_appendix_h_delay.py --evaluate
+```
 
-We hope these intuitions and potential research directions can be pursued in future work.
+### Results Verification
 
-## Appeal
-We would like to emphasize that due to the relatively limited hardware resources of the VPS we used in our experiments (with a maximum of only a dual-core processor and 2.5GB of RAM), we frequently encountered access failures when configuring the Tor Browser Selenium driver (http://github.com/webfp/tor-browser-selenium). These failures were often due to hardware performance bottlenecks, and such incidents may have led to reduced trustworthiness of the datasets we collected. Therefore, we encourage researchers to employ VPS with higher performance capabilities to simulate Tor clients and collect larger-scale datasets.
+The complete evaluation outputs and integrity records are stored under:
 
-## Contacts
-Zhaoxin Jin, jzx3990@bupt.edu.cn  
-Shuang Luo, lok@bupt.cn
+`outputs/reproducibility/`
+
+The archived evidence contains:
+
+- Three successful evaluator logs
+- Configuration and command records
+- Checkpoint and file fingerprints
+- Integrity-check results
+- Published and reproduced metric comparisons
+
+**Important:** This GitHub repository does not currently contain the complete generated datasets or trained checkpoints. The commands above therefore are not directly runnable from a fresh clone without reconstructing or obtaining those artifacts.
+
+A fully verified clean-machine installation procedure and dependency lockfile have not yet been established.
+
+---
+
+## 8. Implementation Notes and Limitations
+
+### Delay-Synthetic Reproduction
+
+The Appendix H delay experiment uses a **copy-isolated implementation of the released delay-merging algorithm**.
+
+The released implementation can mutate timestamp arrays in place, causing contamination when source traces are reused.
+
+This reproduction independently copies each selected source occurrence to prevent such contamination while preserving the released delay scheduling and random-draw behavior.
+
+Consequently, this is **not literal execution of the released generator**.
+
+The original minor timestamp reversals were preserved. Delay annotations do not independently establish traffic-label correspondence.
+
+The mixed-delay accuracy discrepancy remains unresolved; it should not be attributed to copy isolation without a controlled comparison.
+
+### Other Limitations
+
+- Experiments were conducted using a single recorded training run per configuration.
+- Seeds do not guarantee bitwise-identical results across hardware backends.
+- Some original dataset provenance properties were not independently verifiable.
+- The reproduced results are numerically close but not identical to the published findings.
+- The reproduction covers selected Appendix F/H experiments, not the entire original paper.
+
+For the full methodology and discussion, see the [reproduction report](docs/TMWF_REPRODUCTION_REPORT.pdf).
+
+---
+
+## 9. Student Reproduction Contributions
+
+This project builds upon the original research and open-source implementation.
+
+The reproduction-specific work includes:
+
+- Adapting the original implementation to a macOS/PyTorch MPS environment.
+- Preparing synthetic-data generation workflows.
+- Developing Appendix F/H dataset loaders and evaluation adapters.
+- Implementing structural and integrity audits.
+- Investigating timestamp mutation in the released delay-merging algorithm.
+- Implementing and documenting copy-isolated delay synthesis.
+- Training and evaluating the reproduced models.
+- Archiving evaluation logs, checkpoints' provenance metadata, and numerical comparisons.
+- Preparing the final reproducibility report and research figures.
+
+The original TMWF architecture, core methodology, and research contributions belong to the original authors.
+
+---
+
+## 10. References and Attribution
+
+**Original Research:**  
+*Transformer-based Model for Multi-tab Website Fingerprinting Attack.* ACM Conference on Computer and Communications Security (CCS), 2023.
+
+**Original Source Repository:**  
+https://github.com/jzx-bupt/TMWF
+
+**Upstream Commit:**  
+`f593e8afba22750edae23c0c0c32ddf6a62772d4`
+
+This repository preserves the original implementation's history and adds reproduction-specific scripts, experimental analysis, and documentation.
+
+Please cite the original paper when using or discussing the TMWF method.
+
+---
+
+## Reproduction Summary
+
+| Item | Result |
+|---|---|
+| Appendix F / Table 7 | Reproduced |
+| Appendix H / Table 9 | Reproduced with documented deviations |
+| Primary metrics verified | 36 / 36 |
+| Metrics within 4 percentage points | 35 / 36 |
+| Archived evaluation runs | 3 successful |
+| Final research report | 23-page PDF |
+
+**[Read the Full TMWF Reproduction Report](docs/TMWF_REPRODUCTION_REPORT.pdf)**
