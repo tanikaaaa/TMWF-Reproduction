@@ -1,0 +1,37 @@
+{
+  "checkpoint_path": "/Users/tanikagoyal/BTP/TMWF/outputs/appendix_h/full/run_8mrp3k_2/epoch_050.pth",
+  "checkpoint_sha256": "005543d6880dad5fad78852effc54d66d53146bb9e58fbdf3ebfb676fb9a98af",
+  "command": [
+    "/Users/tanikagoyal/BTP/TMWF/.venv/bin/python",
+    "-B",
+    "-u",
+    "/Users/tanikagoyal/BTP/TMWF/code/evaluate_appendix_h_delay.py",
+    "--evaluate"
+  ],
+  "dataset_references": [
+    "dataset/generated_appendix_h_delay/copy_isolated/delay_test_2tab",
+    "dataset/generated_appendix_h_delay/copy_isolated/delay_test_3tab",
+    "dataset/generated_appendix_h_delay/copy_isolated/delay_test_4tab",
+    "dataset/generated_appendix_h/ratio_test_2tab",
+    "dataset/generated_appendix_h/ratio_test_3tab",
+    "dataset/generated_appendix_h/ratio_test_4tab",
+    "dataset/tbb single tab/test"
+  ],
+  "end_timestamp": "2026-10-24T04:37:14.275280+00:00",
+  "evaluator": "appendix_h_delay_table9",
+  "execution_status": "completed_pending_integrity",
+  "exit_code": 0,
+  "expected_markers": [
+    "PASS: 3000 predictions; checkpoint, model parameters/buffers, datasets and generation sources unchanged.",
+    "Appendix H / Table 9 mixed delay-synthetic: 3000 samples."
+  ],
+  "log_path": "/Users/tanikagoyal/BTP/TMWF/outputs/reproducibility/20261024T043555_230947Z_ff51ccec4ff24cea94ee5447d807fbbe/20261024T043555_230947Z_appendix_h_delay_table9.log",
+  "log_sha256": "5c2a0aae2d4eda805cfe3d680df9f9a78087accb0a34743c34e7ccb0231b7aec",
+  "markers_present": {
+    "Appendix H / Table 9 mixed delay-synthetic: 3000 samples.": true,
+    "PASS: 3000 predictions; checkpoint, model parameters/buffers, datasets and generation sources unchanged.": true
+  },
+  "source_script": "/Users/tanikagoyal/BTP/TMWF/code/evaluate_appendix_h_delay.py",
+  "source_script_sha256": "a05f5010e6909117bd62822e894520ae9db1e518131674bab734bd73be2834fe",
+  "start_timestamp": "2026-10-24T04:37:03.586854+00:00"
+}

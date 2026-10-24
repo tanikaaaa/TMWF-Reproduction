@@ -1,0 +1,36 @@
+{
+  "checkpoint_path": "/Users/tanikagoyal/BTP/TMWF/outputs/appendix_h/full/run_8mrp3k_2/epoch_050.pth",
+  "checkpoint_sha256": "005543d6880dad5fad78852effc54d66d53146bb9e58fbdf3ebfb676fb9a98af",
+  "command": [
+    "/Users/tanikagoyal/BTP/TMWF/.venv/bin/python",
+    "-B",
+    "-u",
+    "/Users/tanikagoyal/BTP/TMWF/code/evaluate_appendix_h.py",
+    "--evaluate"
+  ],
+  "dataset_references": [
+    "dataset/generated_appendix_h/ratio_test_2tab",
+    "dataset/generated_appendix_h/ratio_test_3tab",
+    "dataset/generated_appendix_h/ratio_test_4tab",
+    "dataset/tbb realworld/2tabs",
+    "dataset/tbb realworld/3tabs",
+    "dataset/tbb realworld/4tabs"
+  ],
+  "end_timestamp": "2026-10-24T04:37:03.586170+00:00",
+  "evaluator": "appendix_h_ratio_real_table9",
+  "execution_status": "completed_pending_integrity",
+  "exit_code": 0,
+  "expected_markers": [
+    "PASS: 6000 component predictions; 3000 samples per mixed set; model parameters/buffers, checkpoint and source dataset hashes unchanged.",
+    "Appendix H / Table 9, TMWF: original metric rounding preserved."
+  ],
+  "log_path": "/Users/tanikagoyal/BTP/TMWF/outputs/reproducibility/20261024T043555_230947Z_ff51ccec4ff24cea94ee5447d807fbbe/20261024T043555_230947Z_appendix_h_ratio_real_table9.log",
+  "log_sha256": "8944def359cc4926db9429a17c565c3ce533c658d137f5e888332cc9c632a3d1",
+  "markers_present": {
+    "Appendix H / Table 9, TMWF: original metric rounding preserved.": true,
+    "PASS: 6000 component predictions; 3000 samples per mixed set; model parameters/buffers, checkpoint and source dataset hashes unchanged.": true
+  },
+  "source_script": "/Users/tanikagoyal/BTP/TMWF/code/evaluate_appendix_h.py",
+  "source_script_sha256": "9f9582850ef98c9acc50dfd25732b64187bd3d21aaeeb14b0efded2f7dbc712d",
+  "start_timestamp": "2026-10-24T04:36:43.992083+00:00"
+}

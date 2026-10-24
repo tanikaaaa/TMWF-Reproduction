@@ -1,0 +1,32 @@
+{
+  "checkpoint_path": "/Users/tanikagoyal/BTP/TMWF/outputs/appendix_f/full/run_97g8i7wd/epoch_050.pth",
+  "checkpoint_sha256": "c610dfe507fd4ac228d63e44dcbc70edc5df4a23aade805fd10e07d50bc77882",
+  "command": [
+    "/Users/tanikagoyal/BTP/TMWF/.venv/bin/python",
+    "-B",
+    "-u",
+    "/Users/tanikagoyal/BTP/TMWF/code/evaluate_appendix_f.py"
+  ],
+  "dataset_references": [
+    "dataset/generated_appendix_f/test_2tab",
+    "dataset/generated_appendix_f/test_4tab",
+    "dataset/generated_appendix_f/test_6tab"
+  ],
+  "end_timestamp": "2026-10-24T04:36:43.991258+00:00",
+  "evaluator": "appendix_f_table7",
+  "execution_status": "completed_pending_integrity",
+  "exit_code": 0,
+  "expected_markers": [
+    "PASS: exactly 5000 samples per dataset; checkpoint and model state unchanged. No files written.",
+    "Appendix F / Table 7 (complete paper p.20), TMWF rows"
+  ],
+  "log_path": "/Users/tanikagoyal/BTP/TMWF/outputs/reproducibility/20261024T043555_230947Z_ff51ccec4ff24cea94ee5447d807fbbe/20261024T043555_230947Z_appendix_f_table7.log",
+  "log_sha256": "44e888f55751643164ab6bf1a1ef642ace9b936539b6af72df33122986f054cc",
+  "markers_present": {
+    "Appendix F / Table 7 (complete paper p.20), TMWF rows": true,
+    "PASS: exactly 5000 samples per dataset; checkpoint and model state unchanged. No files written.": true
+  },
+  "source_script": "/Users/tanikagoyal/BTP/TMWF/code/evaluate_appendix_f.py",
+  "source_script_sha256": "cd40d244beca3c1fa8f9c4fa27a3df0cad6c96aac8e1872c21cfeb150ab7cae8",
+  "start_timestamp": "2026-10-24T04:35:56.368389+00:00"
+}

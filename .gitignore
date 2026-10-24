@@ -1,0 +1,27 @@
+# Local Python environment
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+
+# Extracted original datasets
+/dataset/tbb single tab/
+/dataset/tbb realworld/
+/dataset/chrome single tab/
+/dataset/chrome realworld/
+
+# Generated research datasets
+/dataset/generated_appendix_f/
+/dataset/generated_appendix_h/
+/dataset/generated_appendix_h_delay/
+
+# Training checkpoints and intermediate outputs
+/outputs/*
+
+# Preserve verified reproducibility logs
+!/outputs/reproducibility/
+
+# Temporary files
+*.tmp
+*.swp

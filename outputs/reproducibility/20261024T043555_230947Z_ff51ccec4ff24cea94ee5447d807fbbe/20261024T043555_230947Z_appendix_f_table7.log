@@ -1,0 +1,114 @@
+Selected device: mps; batch size=80; epoch 50 only
+Evaluation keeps original sample order; cross-backend numerical differences are possible.
+Checkpoint: /Users/tanikagoyal/BTP/TMWF/outputs/appendix_f/full/run_97g8i7wd/epoch_050.pth; completed_epoch=50; mode=full
+Recorded training environment: {'python': '3.9.6', 'numpy': '1.26.4', 'torch': '2.8.0', 'platform': 'macOS-26.7.1-arm64-arm-64bit', 'device': 'mps', 'cuda_devices': 0, 'cuda_name': None}
+Evaluation PyTorch: 2.8.0; model settings: {'embed_dim': 256, 'nhead': 8, 'dim_feedforward': 1024, 'num_encoder_layers': 2, 'num_decoder_layers': 2, 'max_len': 121, 'num_queries': 6, 'cls': 51, 'dropout': 0.1}
+TMWF_DFNet
+
+test_2tab: original metric functions on exactly 5000 samples
+Total accuracy(loose): 0.559
+Total precision(loose): 0.719
+Total recall(loose): 0.72
+Total accuracy(strict): 0.213
+Total precision(strict): 0.309
+Total recall(strict): 0.403
+Accuracy on each page: [0.801, 0.517]
+Average Precision on each page: [0.847, 0.583]
+Average Recall on each page: [0.719, 0.155]
+test_2tab: elapsed evaluation time including loading/metrics/integrity checks: 15.24 s
+Process lifetime peak RSS: 439.78 MB (not current RSS)
+MPS current_allocated_memory: 19.47 MB (snapshot)
+MPS driver_allocated_memory: 2313.91 MB (snapshot)
+test_2tab: model parameters/buffers and input-file hashes unchanged.
+
+test_4tab: original metric functions on exactly 5000 samples
+Total accuracy(loose): 0.643
+Total precision(loose): 0.737
+Total recall(loose): 0.719
+Total accuracy(strict): 0.184
+Total precision(strict): 0.259
+Total recall(strict): 0.301
+Accuracy on each page: [0.841, 0.627, 0.44, 0.321]
+Average Precision on each page: [0.835, 0.675, 0.223, 0.034]
+Average Recall on each page: [0.813, 0.363, 0.12, 0.03]
+test_4tab: elapsed evaluation time including loading/metrics/integrity checks: 15.39 s
+Process lifetime peak RSS: 593.64 MB (not current RSS)
+MPS current_allocated_memory: 19.47 MB (snapshot)
+MPS driver_allocated_memory: 2313.91 MB (snapshot)
+test_4tab: model parameters/buffers and input-file hashes unchanged.
+
+test_6tab: original metric functions on exactly 5000 samples
+Total accuracy(loose): 0.63
+Total precision(loose): 0.774
+Total recall(loose): 0.646
+Total accuracy(strict): 0.5
+Total precision(strict): 0.636
+Total recall(strict): 0.571
+Accuracy on each page: [0.85, 0.679, 0.616, 0.608, 0.654, 0.803]
+Average Precision on each page: [0.849, 0.623, 0.514, 0.505, 0.56, 0.753]
+Average Recall on each page: [0.823, 0.59, 0.472, 0.448, 0.494, 0.671]
+test_6tab: elapsed evaluation time including loading/metrics/integrity checks: 15.86 s
+Process lifetime peak RSS: 724.42 MB (not current RSS)
+MPS current_allocated_memory: 19.47 MB (snapshot)
+MPS driver_allocated_memory: 2313.91 MB (snapshot)
+test_6tab: model parameters/buffers and input-file hashes unchanged.
+
+Appendix F / Table 7 (complete paper p.20), TMWF rows
+Original function rounding preserved; percentages; delta = reproduced - published (pp).
+Dataset      Samples Metric                        Reproduced %  Published %   Delta pp
+test_2tab       5000 Basic Accuracy                        55.9         55.6       +0.3
+test_2tab       5000 Basic Precision                       71.9         71.9       -0.0
+test_2tab       5000 Basic Recall                          72.0         75.2       -3.2
+test_2tab       5000 Advanced Accuracy                     21.3         19.3       +2.0
+test_2tab       5000 Advanced Precision                    30.9         28.3       +2.6
+test_2tab       5000 Advanced Recall                       40.3         40.2       +0.1
+test_2tab       5000 Previous Accuracy page 1              80.1         80.2       -0.1
+test_2tab       5000 Previous Accuracy page 2              51.7         51.6       +0.1
+test_2tab       5000 Previous Precision page 1             84.7         84.2       +0.5
+test_2tab       5000 Previous Precision page 2             58.3         54.0       +4.3
+test_2tab       5000 Previous Recall page 1                71.9         71.8       +0.1
+test_2tab       5000 Previous Recall page 2                15.5         15.0       +0.5
+test_4tab       5000 Basic Accuracy                        64.3         64.7       -0.4
+test_4tab       5000 Basic Precision                       73.7         74.2       -0.5
+test_4tab       5000 Basic Recall                          71.9         73.4       -1.5
+test_4tab       5000 Advanced Accuracy                     18.4         17.7       +0.7
+test_4tab       5000 Advanced Precision                    25.9         25.4       +0.5
+test_4tab       5000 Advanced Recall                       30.1         29.1       +1.0
+test_4tab       5000 Previous Accuracy page 1              84.1         83.4       +0.7
+test_4tab       5000 Previous Accuracy page 2              62.7         59.8       +2.9
+test_4tab       5000 Previous Accuracy page 3              44.0         40.3       +3.7
+test_4tab       5000 Previous Accuracy page 4              32.1         29.7       +2.4
+test_4tab       5000 Previous Precision page 1             83.5         84.0       -0.5
+test_4tab       5000 Previous Precision page 2             67.5         63.0       +4.5
+test_4tab       5000 Previous Precision page 3             22.3         17.5       +4.8
+test_4tab       5000 Previous Precision page 4              3.4          2.2       +1.2
+test_4tab       5000 Previous Recall page 1                81.3         80.1       +1.2
+test_4tab       5000 Previous Recall page 2                36.3         33.9       +2.4
+test_4tab       5000 Previous Recall page 3                12.0         11.0       +1.0
+test_4tab       5000 Previous Recall page 4                 3.0          2.1       +0.9
+test_6tab       5000 Basic Accuracy                        63.0         65.1       -2.1
+test_6tab       5000 Basic Precision                       77.4         77.8       -0.4
+test_6tab       5000 Basic Recall                          64.6         67.6       -3.0
+test_6tab       5000 Advanced Accuracy                     50.0         52.1       -2.1
+test_6tab       5000 Advanced Precision                    63.6         64.8       -1.2
+test_6tab       5000 Advanced Recall                       57.1         59.9       -2.8
+test_6tab       5000 Previous Accuracy page 1              85.0         84.0       +1.0
+test_6tab       5000 Previous Accuracy page 2              67.9         69.5       -1.6
+test_6tab       5000 Previous Accuracy page 3              61.6         64.3       -2.7
+test_6tab       5000 Previous Accuracy page 4              60.8         62.4       -1.6
+test_6tab       5000 Previous Accuracy page 5              65.4         68.1       -2.7
+test_6tab       5000 Previous Accuracy page 6              80.3         80.4       -0.1
+test_6tab       5000 Previous Precision page 1             84.9         83.9       +1.0
+test_6tab       5000 Previous Precision page 2             62.3         63.0       -0.7
+test_6tab       5000 Previous Precision page 3             51.4         54.2       -2.8
+test_6tab       5000 Previous Precision page 4             50.5         52.8       -2.3
+test_6tab       5000 Previous Precision page 5             56.0         59.6       -3.6
+test_6tab       5000 Previous Precision page 6             75.3         71.8       +3.5
+test_6tab       5000 Previous Recall page 1                82.3         81.8       +0.5
+test_6tab       5000 Previous Recall page 2                59.0         61.5       -2.5
+test_6tab       5000 Previous Recall page 3                47.2         51.2       -4.0
+test_6tab       5000 Previous Recall page 4                44.8         48.8       -4.0
+test_6tab       5000 Previous Recall page 5                49.4         52.0       -2.6
+test_6tab       5000 Previous Recall page 6                67.1         67.2       -0.1
+PASS: exactly 5000 samples per dataset; checkpoint and model state unchanged. No files written.
+Total elapsed time: 46.71 s

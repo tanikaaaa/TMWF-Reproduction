@@ -1,0 +1,75 @@
+Selected device: mps; batch size=80; epoch 50 only
+Cross-backend numerical differences are possible. Mixed delay-synthetic: NOT YET PERFORMED.
+Checkpoint: /Users/tanikagoyal/BTP/TMWF/outputs/appendix_h/full/run_8mrp3k_2/epoch_050.pth; epoch=50; mode=full
+Recorded training environment: {'python': '3.9.6', 'numpy': '1.26.4', 'torch': '2.8.0', 'platform': 'macOS-26.7.1-arm64-arm-64bit', 'device': 'mps', 'cuda_devices': 0, 'cuda_name': None}
+Verified configuration: {'experiment': 'appendix_h_duration', 'epochs': 50, 'batch_size': 80, 'lr': 0.0005, 'optimizer': 'Adam', 'loss': 'summed six-slot CrossEntropyLoss', 'seed': 2023, 'train': 'train_6tab', 'train_count': 40000, 'validation': ('ratio_test_2tab', 'ratio_test_3tab', 'ratio_test_4tab'), 'validation_count': 3000, 'timestamp': False, 'input_length': 30720, 'model': {'embed_dim': 256, 'nhead': 8, 'dim_feedforward': 1024, 'num_encoder_layers': 2, 'num_decoder_layers': 2, 'max_len': 121, 'num_queries': 6, 'cls': 51, 'dropout': 0.1}, 'reproduction_choices': {'seed': 2023, 'validation': 'Concatenate 1000 samples each from ratio_test_2tab/3tab/4tab; compute original Basic metrics jointly, for monitoring only', 'checkpoint_selection': 'Final epoch 50; no best-model selection or early stopping'}}
+TMWF_DFNet
+ratio_test_2tab: 1000 samples; loading/inference time=3.01 s
+Process lifetime peak RSS: 466.31 MB (not current RSS)
+MPS current_allocated_memory: 19.47 MB (snapshot)
+MPS driver_allocated_memory: 2313.91 MB (snapshot)
+ratio_test_3tab: 1000 samples; loading/inference time=2.98 s
+Process lifetime peak RSS: 509.15 MB (not current RSS)
+MPS current_allocated_memory: 19.47 MB (snapshot)
+MPS driver_allocated_memory: 2313.91 MB (snapshot)
+ratio_test_4tab: 1000 samples; loading/inference time=3.00 s
+Process lifetime peak RSS: 547.88 MB (not current RSS)
+MPS current_allocated_memory: 19.47 MB (snapshot)
+MPS driver_allocated_memory: 2313.91 MB (snapshot)
+Total accuracy(loose): 0.601
+Total precision(loose): 0.759
+Total recall(loose): 0.712
+mixed_ratio: 3000 samples; elapsed=9.17 s
+real_2tab: 1000 samples; loading/inference time=2.95 s
+Process lifetime peak RSS: 552.09 MB (not current RSS)
+MPS current_allocated_memory: 19.47 MB (snapshot)
+MPS driver_allocated_memory: 2313.91 MB (snapshot)
+Total accuracy(loose): 0.097
+Total precision(loose): 0.415
+Total recall(loose): 0.111
+real_2tab: evaluation time=2.96 s; predictions reused for mixed real
+real_3tab: 1000 samples; loading/inference time=2.96 s
+Process lifetime peak RSS: 557.12 MB (not current RSS)
+MPS current_allocated_memory: 19.47 MB (snapshot)
+MPS driver_allocated_memory: 2313.91 MB (snapshot)
+Total accuracy(loose): 0.148
+Total precision(loose): 0.524
+Total recall(loose): 0.158
+real_3tab: evaluation time=2.98 s; predictions reused for mixed real
+real_4tab: 1000 samples; loading/inference time=2.99 s
+Process lifetime peak RSS: 560.69 MB (not current RSS)
+MPS current_allocated_memory: 19.47 MB (snapshot)
+MPS driver_allocated_memory: 2313.91 MB (snapshot)
+Total accuracy(loose): 0.318
+Total precision(loose): 0.61
+Total recall(loose): 0.326
+real_4tab: evaluation time=3.01 s; predictions reused for mixed real
+Total accuracy(loose): 0.21
+Total precision(loose): 0.564
+Total recall(loose): 0.223
+mixed_real: 3000 samples; elapsed=9.13 s
+Process lifetime peak RSS: 560.69 MB (not current RSS)
+MPS current_allocated_memory: 19.38 MB (snapshot)
+MPS driver_allocated_memory: 2313.91 MB (snapshot)
+
+Appendix H / Table 9, TMWF: original metric rounding preserved.
+Percentages; delta = reproduced minus published, in percentage points.
+Dataset         Samples Metric             Reproduced %  Published %   Delta pp
+mixed_ratio        3000 Basic Accuracy             60.1         61.3       -1.2
+mixed_ratio        3000 Basic Precision            75.9         75.3       +0.6
+mixed_ratio        3000 Basic Recall               71.2         73.5       -2.3
+mixed_real         3000 Basic Accuracy             21.0         23.0       -2.0
+mixed_real         3000 Basic Precision            56.4         58.9       -2.5
+mixed_real         3000 Basic Recall               22.3         24.8       -2.5
+real_2tab          1000 Basic Accuracy              9.7         12.7       -3.0
+real_2tab          1000 Basic Precision            41.5         44.3       -2.8
+real_2tab          1000 Basic Recall               11.1         15.1       -4.0
+real_3tab          1000 Basic Accuracy             14.8         16.0       -1.2
+real_3tab          1000 Basic Precision            52.4         54.3       -1.9
+real_3tab          1000 Basic Recall               15.8         17.3       -1.5
+real_4tab          1000 Basic Accuracy             31.8         34.4       -2.6
+real_4tab          1000 Basic Precision            61.0         63.2       -2.2
+real_4tab          1000 Basic Recall               32.6         35.6       -3.0
+Mixed delay-synthetic: NOT YET PERFORMED; no substituted results.
+PASS: 6000 component predictions; 3000 samples per mixed set; model parameters/buffers, checkpoint and source dataset hashes unchanged.
+Total elapsed time including setup/integrity checks: 18.94 s

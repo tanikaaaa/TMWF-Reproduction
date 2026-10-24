@@ -1,0 +1,114 @@
+{
+  "cwd": "/Users/tanikagoyal/BTP/TMWF",
+  "delay_protocol": "Copy-isolated reproduction of the released TMWF delay-merging algorithm; NOT literal released-code execution. Independent per-occurrence copies; original delay scheduling and existing timestamp reversals preserved.",
+  "end_timestamp": null,
+  "environment": {
+    "mps_fallback": null,
+    "numpy": "1.26.4",
+    "platform": "macOS-26.7.1-arm64-arm-64bit",
+    "python": "3.9.6",
+    "torch": "2.8.0"
+  },
+  "evaluators": [
+    {
+      "checkpoint_path": "/Users/tanikagoyal/BTP/TMWF/outputs/appendix_f/full/run_97g8i7wd/epoch_050.pth",
+      "checkpoint_sha256": null,
+      "command": [
+        "/Users/tanikagoyal/BTP/TMWF/.venv/bin/python",
+        "-B",
+        "-u",
+        "/Users/tanikagoyal/BTP/TMWF/code/evaluate_appendix_f.py"
+      ],
+      "dataset_references": [
+        "dataset/generated_appendix_f/test_2tab",
+        "dataset/generated_appendix_f/test_4tab",
+        "dataset/generated_appendix_f/test_6tab"
+      ],
+      "end_timestamp": null,
+      "evaluator": "appendix_f_table7",
+      "execution_status": "not_started",
+      "exit_code": null,
+      "expected_markers": [
+        "PASS: exactly 5000 samples per dataset; checkpoint and model state unchanged. No files written.",
+        "Appendix F / Table 7 (complete paper p.20), TMWF rows"
+      ],
+      "log_path": null,
+      "log_sha256": null,
+      "source_script": "/Users/tanikagoyal/BTP/TMWF/code/evaluate_appendix_f.py",
+      "source_script_sha256": null,
+      "start_timestamp": null
+    },
+    {
+      "checkpoint_path": "/Users/tanikagoyal/BTP/TMWF/outputs/appendix_h/full/run_8mrp3k_2/epoch_050.pth",
+      "checkpoint_sha256": null,
+      "command": [
+        "/Users/tanikagoyal/BTP/TMWF/.venv/bin/python",
+        "-B",
+        "-u",
+        "/Users/tanikagoyal/BTP/TMWF/code/evaluate_appendix_h.py",
+        "--evaluate"
+      ],
+      "dataset_references": [
+        "dataset/generated_appendix_h/ratio_test_2tab",
+        "dataset/generated_appendix_h/ratio_test_3tab",
+        "dataset/generated_appendix_h/ratio_test_4tab",
+        "dataset/tbb realworld/2tabs",
+        "dataset/tbb realworld/3tabs",
+        "dataset/tbb realworld/4tabs"
+      ],
+      "end_timestamp": null,
+      "evaluator": "appendix_h_ratio_real_table9",
+      "execution_status": "not_started",
+      "exit_code": null,
+      "expected_markers": [
+        "PASS: 6000 component predictions; 3000 samples per mixed set; model parameters/buffers, checkpoint and source dataset hashes unchanged.",
+        "Appendix H / Table 9, TMWF: original metric rounding preserved."
+      ],
+      "log_path": null,
+      "log_sha256": null,
+      "source_script": "/Users/tanikagoyal/BTP/TMWF/code/evaluate_appendix_h.py",
+      "source_script_sha256": null,
+      "start_timestamp": null
+    },
+    {
+      "checkpoint_path": "/Users/tanikagoyal/BTP/TMWF/outputs/appendix_h/full/run_8mrp3k_2/epoch_050.pth",
+      "checkpoint_sha256": null,
+      "command": [
+        "/Users/tanikagoyal/BTP/TMWF/.venv/bin/python",
+        "-B",
+        "-u",
+        "/Users/tanikagoyal/BTP/TMWF/code/evaluate_appendix_h_delay.py",
+        "--evaluate"
+      ],
+      "dataset_references": [
+        "dataset/generated_appendix_h_delay/copy_isolated/delay_test_2tab",
+        "dataset/generated_appendix_h_delay/copy_isolated/delay_test_3tab",
+        "dataset/generated_appendix_h_delay/copy_isolated/delay_test_4tab",
+        "dataset/generated_appendix_h/ratio_test_2tab",
+        "dataset/generated_appendix_h/ratio_test_3tab",
+        "dataset/generated_appendix_h/ratio_test_4tab",
+        "dataset/tbb single tab/test"
+      ],
+      "end_timestamp": null,
+      "evaluator": "appendix_h_delay_table9",
+      "execution_status": "not_started",
+      "exit_code": null,
+      "expected_markers": [
+        "PASS: 3000 predictions; checkpoint, model parameters/buffers, datasets and generation sources unchanged.",
+        "Appendix H / Table 9 mixed delay-synthetic: 3000 samples."
+      ],
+      "log_path": null,
+      "log_sha256": null,
+      "source_script": "/Users/tanikagoyal/BTP/TMWF/code/evaluate_appendix_h_delay.py",
+      "source_script_sha256": null,
+      "start_timestamp": null
+    }
+  ],
+  "execution_status": "running",
+  "hash_policy": "One pre/post hash per unique evaluation input, source script and checkpoint; training datasets excluded.",
+  "log_format": "stdout and stderr merged into one binary log per evaluator",
+  "metric_policy": "No metric parsing. Complete raw logs are authoritative.",
+  "metrics": null,
+  "python_executable": "/Users/tanikagoyal/BTP/TMWF/.venv/bin/python",
+  "start_timestamp": "2026-10-24T04:35:55.231170+00:00"
+}
